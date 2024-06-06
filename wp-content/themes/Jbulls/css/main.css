@@ -87,6 +87,16 @@ header .top-bar li{
 
 /*custom video section */
 
+.video div iframe{
+    width: 100%;
+    height: 900px;
+}
+
+
+
+
+
+
 
 
 
@@ -198,3 +208,13 @@ footer .copy-txt {
     justify-content: center;
     margin-top: -70px;
 }
+
+.your-slider-class{
+    margin: 5% 15%;
+}
+.video-embed iframe{
+    
+    display: block;
+    width: 100%;
+    height: 100%;
+} 
