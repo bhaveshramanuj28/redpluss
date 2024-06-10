@@ -89,6 +89,10 @@ function load_js(){
 }
 add_action('wp_enqueue_scripts', 'load_js');
 
+
+
+
+
 //theme options
 add_theme_support('menus');
 add_theme_support('post-thumbnails');
@@ -379,5 +383,53 @@ function first_custom_taxonomy(){
 
 }
 add_action('init', 'first_custom_taxonomy');
+
+// Newsletter subscription form
+
+// form submission handler
+function handle_custom_form_submission() {
+    if (isset($_POST['custom_form_submit'])) {
+        
+        $name = sanitize_text_field($_POST['your_name']);
+        $email = sanitize_email($_POST['your_email']);
+
+        
+        $to = get_option('admin_email'); 
+        $subject = 'New Newsletter Subscription';
+        $message = "You have a new newsletter subscription.\n\nName: $name\nEmail: $email";
+        $headers = "From: $name <$email>\r\n";
+
+        
+        wp_mail($to, $subject, $message, $headers);
+
+        
+        echo '<p>Thank you for subscribing!</p>';
+    }
+}
+
+// Shortcode function to display the form
+function custom_newsletter_form_shortcode() {
+    ob_start();
+
+    // Display the form
+    ?>
+    <form id="custom-newsletter-form" method="post">
+        <!-- <p>Your Name (required)<br />
+            <input type="text" name="your_name" required />
+        </p> -->
+        <p>Your Email (required)<br />
+            <input type="email" name="your_email" required />
+        </p>
+        <p><input type="submit" name="custom_form_submit" value="Subscribe" /></p>
+    </form>
+    <?php
+
+    // call the handler function
+    handle_custom_form_submission();
+
+    return ob_get_clean();
+}
+
+add_shortcode('custom_newsletter_form', 'custom_newsletter_form_shortcode');
 
 
