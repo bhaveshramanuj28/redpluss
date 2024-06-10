@@ -347,3 +347,72 @@ footer .copy-txt {
 }
 
 
+.newsletter-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    /* border : 1px solid #EC3434 */
+}
+.form-input{
+    border: none;
+    background-color: #F9F9F9;
+    border-radius: 5px;
+    height: 60px;
+    width: 35%;
+    padding: 15px;
+}
+.form-input:focus-visible{
+    border: 1px #CDCDCD;
+    outline: none;
+    border-radius: 5px;
+}
+
+.form-submit{
+    height: 60px;
+    width: 7%;
+    background: #EC3434;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    line-height: 28px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 500;
+    border-radius: 5px;
+}
+.form-mssg{
+    display: flex;
+    justify-content: center;
+}
+.form-mssg{
+    margin-top: 15px;
+}
+
+
+/* cards for hospital and healthcare */
+.slider-item{
+    margin: 20px;
+}
+.slick-slide img{
+    width: 100%;
+    height: 200px;
+    border-radius: 10px 10px 0 0;
+}
+.slider-content{
+    padding: 5%;
+}
+.card-c{
+    border-radius: 10px;
+}
+.success-rate{
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 30px;
+    color: #adadad;
+}
+.cardhead{
+    color: #EC3434;
+    font-size: 26px;
+    font-weight: 500;
+    margin-top: -4%;
+}

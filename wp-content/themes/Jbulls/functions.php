@@ -10,6 +10,16 @@ function load_css(){
 }
 add_action('wp_enqueue_scripts', 'load_css');
 
+/**
+ * Filter the excerpt length to 30 words.
+ *
+ * @param int $length Excerpt length.
+ * @return int (Maybe) modified excerpt length.
+ */
+function wp_example_excerpt_length( $length ) {
+    return 10;
+}
+add_filter( 'excerpt_length', 'wp_example_excerpt_length');
 // custom slider function and widget section
 function enqueue_slick_slider() {
     wp_enqueue_style('slick-css', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css');
@@ -22,26 +32,30 @@ add_action('wp_enqueue_scripts', 'enqueue_slick_slider');
 
 function loop_slider_shortcode($atts) {
     $args = array(
-        'post_type' => 'post', // You can change this to any post type
+        'post_type' => 'healthcarepackages', // You can change this to any post type
         'posts_per_page' => -1
     );
 
     $query = new WP_Query($args);
 
     ob_start();
-
+    
     if ($query->have_posts()) : ?>
         <div class="your-slider-class">
             <?php while ($query->have_posts()) : $query->the_post(); ?>
-                <div class="slider-item">
+                <div class="slider-item card card-c">
                     <?php if (has_post_thumbnail()) : ?>
-                        <div class="slider-image">
-                            <?php the_post_thumbnail('full'); ?>
+                        <div class="slider-image card-img-top">
+                            <?php the_post_thumbnail('card-thumb'); ?>
                         </div>
                     <?php endif; ?>
                     <div class="slider-content">
-                        <h3><?php the_title(); ?></h3>
-                        <?php the_excerpt(); ?>
+                        <?php $postmeta = get_post_meta( get_the_ID() ); ?>
+                        <?php  $json_data = wp_json_encode($postmeta); ?>
+                        <p class="success-rate"><?php echo "Success Rate - " . get_post_field('success-rate') . "%"; ?></p>
+                        <h3 class="cardhead"><?php the_title(); ?></h3>
+                        <?php the_excerpt('wp_example_excerpt_length'); ?>
+                        <?php echo "&#8377;&nbsp;" . get_post_field('price-basic'); ?>
                     </div>
                 </div>
             <?php endwhile; ?>
@@ -178,6 +192,7 @@ function logo_customizer_register($wp_customize) {
 }
 // image size register
 add_image_size('hero', 650, 700, true);
+add_image_size('card-thumb', 300, 300, true);
 
 
 function custom_search(){
@@ -322,6 +337,8 @@ add_filter( 'wp_check_filetype_and_ext', function($data, $file, $filename, $mime
 
 // custom post types within the website
 
+
+// healthcare package post types
 function healthcare_post_type(){
 
     $args = array(
@@ -379,10 +396,54 @@ function first_custom_taxonomy(){
         'hierarchical' => true, 
     );
 
-    register_taxonomy('location', array('Healthcare Packages'), $args);
+    register_taxonomy('location', array('Healthcare Packages', 'Hospitals'), $args);
 
 }
 add_action('init', 'first_custom_taxonomy');
+
+
+
+// Hospitals
+
+
+function hospitals_post_type(){
+
+    $args = array(
+
+        'labels' => array(
+            'name' => 'Hospitals',
+            'singular_name' => 'Hospital',
+            'add_new' => __( 'Add New Hospital' ),
+            'add_new_item' => __( 'Add New Hospital' ),
+            'edit' => __( 'Edit' ),
+            'edit_item' => __( 'Edit Hospital' ),
+            'new_item' => __( 'New Hospital' ),
+            'view' => __( 'View Hospital' ),
+            'view_item' => __( 'View Hospital' ),
+            'search_items' => __( 'Search Hospital' ),
+            'not_found' => __( 'No Hospital found' ),
+            'not_found_in_trash' => __( 'No Hospital found in Trash' ),
+            'parent' => __( 'Parent Hospital' ),
+            
+        ),
+
+        'public' => true,
+        'has_archive' => true,
+        'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
+        'rewrite' => array('slug' => 'hospital'),
+        'show_ui' => true,  
+        'capability_type' => 'post',  
+        'hierarchical' => false,
+        'menu_icon' => 'dashicons-building'
+
+    );
+    register_post_type('Hospital', $args);
+}
+add_action('init', 'hospitals_post_type');
+
+
+
+
 
 // Newsletter subscription form
 
@@ -403,7 +464,7 @@ function handle_custom_form_submission() {
         wp_mail($to, $subject, $message, $headers);
 
         
-        echo '<p>Thank you for subscribing!</p>';
+        echo '<p class="form-mssg">Thank you for subscribing!</p>';
     }
 }
 
@@ -413,14 +474,9 @@ function custom_newsletter_form_shortcode() {
 
     // Display the form
     ?>
-    <form id="custom-newsletter-form" method="post">
-        <!-- <p>Your Name (required)<br />
-            <input type="text" name="your_name" required />
-        </p> -->
-        <p>Your Email (required)<br />
-            <input type="email" name="your_email" required />
-        </p>
-        <p><input type="submit" name="custom_form_submit" value="Subscribe" /></p>
+    <form id="custom-newsletter-form" method="post" class="newsletter-form">
+        <input class="form-input" type="email" placeholder="Your Email" name="your_email" required />
+        <input class="form-submit" type="submit" name="custom_form_submit" value="Subscribe" />
     </form>
     <?php
 
@@ -433,3 +489,26 @@ function custom_newsletter_form_shortcode() {
 add_shortcode('custom_newsletter_form', 'custom_newsletter_form_shortcode');
 
 
+// custom checkbox meta feilds for HCpkg
+function my_add_meta_box() {
+    add_meta_box(
+        'book_meta_box',           // ID of the meta box
+        'Book Details',            // Title of the meta box
+        'my_meta_box_callback',    // Callback function
+        'book',                    // Post type
+        'side',                    // Context (normal, advanced, side)
+        'high'                     // Priority
+    );
+}
+add_action('add_meta_boxes', 'my_add_meta_box');
+
+function my_meta_box_callback($post) {
+    wp_nonce_field('my_save_meta_box_data', 'my_meta_box_nonce');
+    $value = get_post_meta($post->ID, '_my_checkbox_value', true);
+    ?>
+    <label for="my_checkbox">
+        <input type="checkbox" id="my_checkbox" name="my_checkbox" value="1" <?php checked($value, '1'); ?> />
+        Special Edition
+    </label>
+    <?php
+}
