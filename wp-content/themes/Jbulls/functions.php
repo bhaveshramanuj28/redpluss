@@ -32,7 +32,7 @@ add_action('wp_enqueue_scripts', 'enqueue_slick_slider');
 
 function loop_slider_shortcode($atts) {
     $args = array(
-        'post_type' => 'healthcarepackages', // You can change this to any post type
+        'post_type' => 'healthcarepackages', 
         'posts_per_page' => -1
     );
 
@@ -451,14 +451,14 @@ add_action('init', 'hospitals_post_type');
 function handle_custom_form_submission() {
     if (isset($_POST['custom_form_submit'])) {
         
-        $name = sanitize_text_field($_POST['your_name']);
+//         $name = sanitize_text_field($_POST['your_name']);
         $email = sanitize_email($_POST['your_email']);
 
         
         $to = get_option('admin_email'); 
         $subject = 'New Newsletter Subscription';
-        $message = "You have a new newsletter subscription.\n\nName: $name\nEmail: $email";
-        $headers = "From: $name <$email>\r\n";
+        $message = "You have a new newsletter subscription.\nEmail: $email";
+        $headers = "From: <$email>\r\n";
 
         
         wp_mail($to, $subject, $message, $headers);
