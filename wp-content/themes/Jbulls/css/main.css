@@ -297,6 +297,8 @@ footer .copy-txt {
 }
 .features{
     padding: 5px 10%;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 .features h2{
     width: 80%;
@@ -415,4 +417,30 @@ footer .copy-txt {
     font-size: 26px;
     font-weight: 500;
     margin-top: -4%;
+}
+
+@media(max-width:768px){
+    .custom-logo {
+        height: 55px;
+    }
+    .hero_1 {
+        padding: 20px;
+    }
+    .hero_title {
+        font-size: 40px;
+        line-height: 45px;
+    }
+    .hero_img img {
+        height: 300px;
+    }
+    .sub-heading-home {
+        line-height: 35px;
+    }
+    .counter {
+        font-size: 40px;
+        padding-bottom: 10px;
+    }
+    .treatment-card-head {
+        text-align: center;
+    }
 }
