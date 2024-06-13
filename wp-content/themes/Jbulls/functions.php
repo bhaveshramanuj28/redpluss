@@ -194,21 +194,6 @@ function logo_customizer_register($wp_customize) {
 add_image_size('hero', 650, 700, true);
 add_image_size('card-thumb', 300, 300, true);
 
-
-function custom_search(){
-    ?>
-    <form action = "./" method = "get">
-    <label for="search">search</label>
-    <!-- <input type="hidden" name = "cat" value = ""> -->
-    <input type="text" name = "s" id= "search" value = "<?php the_search_query(); ?>" required class="search-cus">
-    <input type="text" name = "s" id= "search" value = "<?php the_search_query(); ?>" required class="search-cus">
-    <button type = "submit">search</button>
-</form>
-<?php
-}
-add_shortcode('custom_search', 'custom_search');
-
-
 // animated counter widget
 
 function display_animated_counter() {
