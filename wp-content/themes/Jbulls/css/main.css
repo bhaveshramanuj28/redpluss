@@ -297,6 +297,8 @@ footer .copy-txt {
 }
 .features{
     padding: 5px 10%;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 .features h2{
     width: 80%;
@@ -417,3 +419,457 @@ footer .copy-txt {
     margin-top: -4%;
 }
 
+body{
+    background: #fbfcfa;
+}
+
+header{
+    width: 100%;
+    height: 100px;
+    background-color: #FBFCFA;
+    margin: 0;
+    padding: 10px;
+}
+.custom-logo{
+    height: 75px;
+    width: 50%;
+}
+header .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.menu-col{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header .top-bar li{
+    position: relative;
+}
+
+.top-bar{
+    list-style-type: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.top-bar li a {
+    padding: .25rem 1rem;
+    color: #000000;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 500;
+    text-decoration: none;
+}
+.top-bar li:first-child a{
+    padding-left: 0;
+}
+
+.top-bar li:last-child a{
+    padding-right: 0;
+}
+.top-bar li a:hover{
+    color: #EC3434;
+}
+.current-menu-item a {
+    color: #EC3434 !important;
+}
+.avatar{
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    border: 2px solid;
+}
+.profile-main{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 100px;
+}
+.join{
+    background-color: #EC3434;
+    color: #FBFCFA;
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 2px 20px -3px #EC3434;
+}
+.head{
+    align-items: center;
+}
+.profile-main{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 5%;
+}
+
+/*custom video section */
+
+.video div iframe{
+    width: 100%;
+    height: 900px;
+}
+
+
+
+
+
+
+
+
+
+/* Footer CSS */
+footer{
+    background-color: #FBFCFA ;
+}
+footer .custom-logo{
+    height: 75px;
+    width: 70%;
+}
+.first-footer-menu {
+    padding-top:0.5rem;
+    padding-bottom:0.5rem;
+}
+footer ul li {
+    list-style-type: none;
+}
+footer ul li::before {
+    content: '';
+    display: inline-block;
+    height: 10px;
+    width: 10px;
+    vertical-align: middle;
+    background-image: url('https://redplusscustom.jbullsinfotech.com/wp-content/uploads/2024/06/right-thin-arrowheads_32738.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 0.5rem;
+}
+footer ul {
+    padding-left: 5px;
+}
+footer h4 {
+    color:#EC3434;
+}
+footer ul li a {
+    color:#000000;
+}
+footer ul li a:hover {
+    color:#EC3434;
+    text-decoration: none;
+}
+footer ul li:hover::before , footer ul .current-menu-item::before {
+    background-image: url('https://redplusscustom.jbullsinfotech.com/wp-content/uploads/2024/06/right-thin-arrowheads.svg');
+}
+footer .copy-txt {
+    color:#A6A6A5;
+}
+
+
+/* hero sections home */
+.hero_section{
+    background: #FBFCFA;
+}
+.hero_1{
+    padding: 0 0px 0 150px;
+}
+.hero_2{
+    display: flex;
+    justify-content: center;
+}
+.join_us{
+    color: #EC3434;
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 99px;
+    padding-left: 5px;
+}
+.hero_title{
+    font-weight: 600;
+    font-size: 80px;
+    line-height: 80px;
+    font-family: gothic-a1, sans-serif;
+    letter-spacing: 5px;
+}
+.hero_img img {
+    width: 100%;
+    height: 700px;
+}
+.sub-heading-home{
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 50px;
+    letter-spacing: 0.2px;
+    color: #adadad;
+}
+.hero-2{
+    margin-top: 5% !important;
+}
+
+/* counter section */
+.counter-section{
+    background-color: #EC3434;
+    align-items: center;
+    padding: 2%;
+}
+.counter{
+    font-size: 68px;
+    font-weight: 700;
+    color: #FBFCFA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.counter-message{
+    font-size: 24px;
+    color: #FBFCFA;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -70px;
+}
+
+.your-slider-class{
+    margin: 5% 15%;
+}
+
+/* youtube embeded section */
+.video-embed iframe{
+    
+    display: block;
+    width: 100%;
+    height: 100%;
+} 
+.video-overlay{
+    width: 70% !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.video-overlay img{
+    width: 15% !important;
+}
+.video-overlay h4{
+    font-size: 62px;
+    font-weight: 400;
+    line-height: 60px;
+    letter-spacing: 0.2px;
+    width: 50%;
+    text-align: center;
+    margin-bottom: 5%;
+    color: #473239;
+}
+.video-overlay p{
+    width: 35%;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 30px;
+    margin-top: 05%;
+    color: #473239
+}
+.treatment-card-head{
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 50px;
+    display: flex;
+    justify-content: center;
+    text-transform: capitalize;
+    color: #000000;
+}
+.card-sub-head{
+    display: flex;
+    justify-content: center;
+    text-transform: lowercase;
+    color: #adadad;
+    size:20px;
+    line-height: 30px;
+    font-weight: 400;
+}
+.card-button{
+    margin-top: 5% !important;
+}
+.download{
+    position: relative;
+    top: -400px;
+    left: 43.2%;
+    width: 250px;
+    padding: 10px;
+    border-radius: 10px;
+    background: #EC3434;
+    color: #FFF;
+    font-size: 18px;
+    font-weight: 600;
+    box-shadow: 0px 2px 20px -3px #EC3434;
+    border: none;
+}
+.download:hover{
+    border: 1px solid #EC3434;
+    color: #EC3434;
+    background: transparent;
+    transition: 0.5s;
+    box-shadow: 0px 2px 20px -5px #EC3434;
+    font-weight: 700;
+    font-size: 20px;
+}
+.features{
+    padding: 5px 10%;
+}
+.features h2{
+    width: 80%;
+    text-align: left;
+    font-size: 24px;
+    font-weight: 600;
+}
+.features p{
+    width: 80%;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 400;
+}
+.feature-box{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.icon{
+    margin-bottom: 5%;
+    color: #FFF;
+}
+.last{
+    margin-bottom: 5%;
+    padding-bottom: 2%;
+}
+
+.newsletter-head{
+    font-size: 16px;
+    font-weight: 700;
+    color: #FB4455;
+    line-height: 25px;
+    letter-spacing: 0.2px;
+    text-transform: capitalize;
+}
+.news-sub-head{
+    font-size: 40px;
+    line-height: 50px;
+    font-weight: 500;
+    color: #252B42;
+}
+.news-para{
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    color: #737373;
+}
+
+
+.newsletter-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    /* border : 1px solid #EC3434 */
+}
+.form-input{
+    border: none;
+    background-color: #F9F9F9;
+    border-radius: 5px;
+    height: 60px;
+    width: 35%;
+    padding: 15px;
+}
+.form-input:focus-visible{
+    border: 1px #CDCDCD;
+    outline: none;
+    border-radius: 5px;
+}
+
+.form-submit{
+    height: 60px;
+    width: 7%;
+    background: #EC3434;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    line-height: 28px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 500;
+    border-radius: 5px;
+}
+.form-mssg{
+    display: flex;
+    justify-content: center;
+}
+.form-mssg{
+    margin-top: 15px;
+}
+
+
+/* cards for hospital and healthcare */
+.slider-item{
+    margin: 20px;
+}
+.slick-slide img{
+    width: 100%;
+    height: 200px;
+    border-radius: 10px 10px 0 0;
+}
+.slider-content{
+    padding: 5%;
+}
+.card-c{
+    border-radius: 10px;
+}
+.success-rate{
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 30px;
+    color: #adadad;
+}
+.cardhead{
+    color: #EC3434;
+    font-size: 26px;
+    font-weight: 500;
+    margin-top: -4%;
+}
+
+
+@media(max-width:768px){
+    .custom-logo {
+        height: 55px;
+    }
+    .hero_1 {
+        padding: 20px;
+    }
+    .hero_title {
+        font-size: 40px;
+        line-height: 45px;
+    }
+    .hero_img img {
+        height: 300px;
+    }
+    .sub-heading-home {
+        line-height: 35px;
+    }
+    .counter {
+        font-size: 40px;
+        padding-bottom: 10px;
+    }
+    .treatment-card-head {
+        text-align: center;
+    }
+}
+
+@media(min-width:320px){
+    /* .slick-slide{
+        display: none !important;
+    }
+    .slick-current{
+        display: block !important;
+    } */
+}
