@@ -32,7 +32,7 @@ add_action('wp_enqueue_scripts', 'enqueue_slick_slider');
 
 function loop_slider_shortcode($atts) {
     $args = array(
-        'post_type' => 'healthcarepackages', // You can change this to any post type
+        'post_type' => 'healthcarepackages', 
         'posts_per_page' => -1
     );
 
