@@ -512,3 +512,14 @@ function my_meta_box_callback($post) {
     </label>
     <?php
 }
+function add_relation_meta_box(){
+    add_meta_box(
+        'related_hospital',
+        'Related Hospital',
+        'related_hospital_type_render_meta_box',
+        'healthcare_packages',
+        'side',
+        'default'
+    );
+}
+add_action('add_meta_box', 'add_relation_meta_box');
