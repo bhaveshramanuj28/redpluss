@@ -477,12 +477,12 @@ add_shortcode('custom_newsletter_form', 'custom_newsletter_form_shortcode');
 // custom checkbox meta feilds for HCpkg
 function my_add_meta_box() {
     add_meta_box(
-        'book_meta_box',           // ID of the meta box
-        'Book Details',            // Title of the meta box
-        'my_meta_box_callback',    // Callback function
-        'book',                    // Post type
-        'side',                    // Context (normal, advanced, side)
-        'high'                     // Priority
+        'book_meta_box',       
+        'Book Details',            
+        'my_meta_box_callback',    
+        'healthcare_packages',     
+        'side',                    
+        'high'                     
     );
 }
 add_action('add_meta_boxes', 'my_add_meta_box');
@@ -497,6 +497,9 @@ function my_meta_box_callback($post) {
     </label>
     <?php
 }
+
+
+
 function add_relation_meta_box(){
     add_meta_box(
         'related_hospital',
@@ -508,3 +511,25 @@ function add_relation_meta_box(){
     );
 }
 add_action('add_meta_box', 'add_relation_meta_box');
+
+function related_hospital_type_render_meta_box(){
+    $related_post_id = get_post_meta($post->ID, 'related_hospital', true);
+
+    wp_nonce_field('save_related_hospital_meta_box', 'related_hospital_meta_box_nonce');
+
+    $args = array(
+        'post_type' => 'hopital',
+        'post-per_page' => -1,
+    );
+    $posts = get_posts($args);
+
+    echo '<label for="related_hospital">Select Related Hospital: </label>';
+    echo '<select name="related-hospital" id="related_hospital">';
+    echo '<option value="">None</option>';
+    foreach($posts as $hospitals){
+        echo '<option value="' . $hospitals->ID .'"' . selected($related_post_id, $hospitals->ID, false) . '>' . $hospitals->post_title . '</option>';
+    }
+    echo '</select>';
+
+}
+

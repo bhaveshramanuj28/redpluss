@@ -458,3 +458,32 @@ footer .copy-txt {
         display: block !important;
     } */
 }
+
+/*css for the about us page and buttons*/
+
+
+.about-bg{
+    background-color: #EC3434;
+    height: 745px;
+    border-radius: 0 0 100px 100px;
+    background-image: url('http://localhost/redpluss/wp-content/uploads/2024/06/1588327_430-1.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-blend-mode: color-burn;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.con-child{
+    width: 80%;
+}
+.about-head{
+    font-size: 80px;
+    font-weight: 500;
+    line-height: 80px;
+}
+.learn-more{
+    font-weight: 600;
+    margin-top: 30px !important;
+}
