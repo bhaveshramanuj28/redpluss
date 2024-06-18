@@ -464,7 +464,7 @@ footer .copy-txt {
 
 .about-bg{
     background-color: #EC3434;
-    height: 745px;
+    height: 82vh;
     border-radius: 0 0 100px 100px;
     background-image: url('http://localhost/redpluss/wp-content/uploads/2024/06/1588327_430-1.png');
     background-repeat: no-repeat;
@@ -477,6 +477,7 @@ footer .copy-txt {
 }
 .con-child{
     width: 80%;
+    margin-top: -21vh;
 }
 .about-head{
     font-size: 80px;
@@ -486,4 +487,52 @@ footer .copy-txt {
 .learn-more{
     font-weight: 600;
     margin-top: 30px !important;
+}
+
+
+.info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.info-inner{
+    width: 68%;
+    height: 100%;
+}
+.info-img{
+    width: 30%;
+    display: flex;
+    justify-content: center;
+}
+.about-log{
+    width: 75%;
+    height: 100%;
+}
+.about-sec-2{
+    background: #fff;
+    width: 65%;
+    border-radius: 25px;
+}
+.block{
+    background-color: #FEDFDF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    width: 100%;
+    height: 30vh;
+    padding: 5%;
+}
+.block-outer{
+    margin-top: -25vh;
+    
+}
+
+.info-head{
+    width: 100%;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 30px;
+    text-transform: capitalize;
 }

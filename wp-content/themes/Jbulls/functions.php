@@ -532,4 +532,3 @@ function related_hospital_type_render_meta_box(){
     echo '</select>';
 
 }
-
