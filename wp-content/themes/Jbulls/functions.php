@@ -475,60 +475,78 @@ add_shortcode('custom_newsletter_form', 'custom_newsletter_form_shortcode');
 
 
 // custom checkbox meta feilds for HCpkg
-function my_add_meta_box() {
+function add_custom_meta_box() {
     add_meta_box(
-        'book_meta_box',       
-        'Book Details',            
-        'my_meta_box_callback',    
-        'healthcare_packages',     
-        'side',                    
-        'high'                     
+        'hospital_type',       // Unique ID for the meta box
+        'Hospital Type',       // Meta box title
+        'display_custom_meta_box',  // Callback function to display the meta box
+        'healthcarepackages',                   // Post type
+        'side',                   // Context (side, normal, advanced)
+        'high'                    // Priority
     );
 }
-add_action('add_meta_boxes', 'my_add_meta_box');
+add_action('add_meta_boxes', 'add_custom_meta_box');
 
-function my_meta_box_callback($post) {
-    wp_nonce_field('my_save_meta_box_data', 'my_meta_box_nonce');
-    $value = get_post_meta($post->ID, '_my_checkbox_value', true);
+function display_custom_meta_box($post) {
+    // Retrieve current values of the meta fields
+    $text_value = get_post_meta($post->ID, '_custom_meta_text', true);
+    $checkbox_value = get_post_meta($post->ID, '_custom_meta_checkbox', true);
+    $select_value = get_post_meta($post->ID, '_custom_meta_select', true);
+    $textarea_value = get_post_meta($post->ID, '_custom_meta_textarea', true);
+    
+    // Security nonce field
+    wp_nonce_field(basename(__FILE__), 'custom_meta_box_nonce');
     ?>
-    <label for="my_checkbox">
-        <input type="checkbox" id="my_checkbox" name="my_checkbox" value="1" <?php checked($value, '1'); ?> />
-        Special Edition
-    </label>
+    <p>
+        <label for="custom_meta_select">Select Field:</label>
+        <select name="custom_meta_select" id="custom_meta_select">
+            <option value="" <?php selected($select_value, ''); ?>>Select an option</option>
+            <option value="Multispecialty" <?php selected($select_value, 'Multispecialty'); ?>>Multispecialty</option>
+            <option value="Specialty" <?php selected($select_value, 'Specialty'); ?>>Specialty</option>
+            <option value="General" <?php selected($select_value, 'General'); ?>>General</option>
+            <option value="Clinic" <?php selected($select_value, 'Clinic'); ?>>Clinic</option>
+        </select>
+    </p>
     <?php
 }
-
-
-
-function add_relation_meta_box(){
-    add_meta_box(
-        'related_hospital',
-        'Related Hospital',
-        'related_hospital_type_render_meta_box',
-        'healthcare_packages',
-        'side',
-        'default'
-    );
-}
-add_action('add_meta_box', 'add_relation_meta_box');
-
-function related_hospital_type_render_meta_box(){
-    $related_post_id = get_post_meta($post->ID, 'related_hospital', true);
-
-    wp_nonce_field('save_related_hospital_meta_box', 'related_hospital_meta_box_nonce');
-
-    $args = array(
-        'post_type' => 'hopital',
-        'post-per_page' => -1,
-    );
-    $posts = get_posts($args);
-
-    echo '<label for="related_hospital">Select Related Hospital: </label>';
-    echo '<select name="related-hospital" id="related_hospital">';
-    echo '<option value="">None</option>';
-    foreach($posts as $hospitals){
-        echo '<option value="' . $hospitals->ID .'"' . selected($related_post_id, $hospitals->ID, false) . '>' . $hospitals->post_title . '</option>';
+function save_custom_meta_box($post_id) {
+    // Check for nonce security
+    if (!isset($_POST['custom_meta_box_nonce']) || !wp_verify_nonce($_POST['custom_meta_box_nonce'], basename(__FILE__))) {
+        return $post_id;
     }
-    echo '</select>';
 
+    // Check if the user has permission to save the data
+    if (!current_user_can('edit_post', $post_id)) {
+        return $post_id;
+    }
+
+    // Check for autosave
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return $post_id;
+    }
+
+    // Save or delete the select field
+    $new_select_value = (isset($_POST['custom_meta_select']) ? sanitize_text_field($_POST['custom_meta_select']) : '');
+    $select_meta_key = '_custom_meta_select';
+    update_post_meta($post_id, $select_meta_key, $new_select_value);
+
+}
+add_action('save_post', 'save_custom_meta_box');
+
+// creating custom relationship betwwn two post types
+
+function add_parent_hospital_meta(){
+   add_meta_box(
+    'parent_hospital_meta_box',
+    'Select Related Hospital',
+    'display_parent_hospital',
+    'healthcarepackages',
+    'normal',
+    'High'
+   );
+}    
+add_action('add_meta_box', 'add_parent_hospital_meta');
+
+function display_parent_hospital(){
+    
 }
