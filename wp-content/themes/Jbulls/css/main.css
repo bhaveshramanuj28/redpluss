@@ -536,3 +536,10 @@ footer .copy-txt {
     line-height: 30px;
     text-transform: capitalize;
 }
+
+
+.search-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

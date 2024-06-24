@@ -40,7 +40,8 @@ function loop_slider_shortcode($atts) {
 
     ob_start();
     
-    if ($query->have_posts()) : ?>
+    if ($query->have_posts()) : 
+    ?>
         <div class="your-slider-class">
             <?php while ($query->have_posts()) : $query->the_post(); ?>
                 <div class="slider-item card card-c">
@@ -56,6 +57,11 @@ function loop_slider_shortcode($atts) {
                         <h3 class="cardhead"><?php the_title(); ?></h3>
                         <?php the_excerpt('wp_example_excerpt_length'); ?>
                         <?php echo "&#8377;&nbsp;" . get_post_field('price-basic'); ?>
+                        <?php 
+                        if(!empty(get_post_field('parent_hospital_id'))){
+                            echo get_the_title(get_post_field('parent_hospital_id'));
+                        }
+                        ?>
                     </div>
                 </div>
             <?php endwhile; ?>
@@ -63,7 +69,7 @@ function loop_slider_shortcode($atts) {
     <?php endif;
 
     wp_reset_postdata();
-
+                        
     return ob_get_clean();
 }
 add_shortcode('loop_slider', 'loop_slider_shortcode');
@@ -418,7 +424,7 @@ function hospitals_post_type(){
         'rewrite' => array('slug' => 'hospital'),
         'show_ui' => true,  
         'capability_type' => 'post',  
-        'hierarchical' => false,
+        'hierarchical' => true,
         'menu_icon' => 'dashicons-building'
 
     );
@@ -532,21 +538,76 @@ function save_custom_meta_box($post_id) {
 
 }
 add_action('save_post', 'save_custom_meta_box');
-
-// creating custom relationship betwwn two post types
-
-function add_parent_hospital_meta(){
-   add_meta_box(
-    'parent_hospital_meta_box',
-    'Select Related Hospital',
-    'display_parent_hospital',
-    'healthcarepackages',
-    'normal',
-    'High'
-   );
+ 
+function add_hospital_meta_box() {
+    add_meta_box(
+        'parent_hospital_meta_box',
+        'select hospital',
+        'display_parent_hospital',
+        'healthcarepackages',
+        'side',
+        'high'
+    );
 }    
-add_action('add_meta_box', 'add_parent_hospital_meta');
+add_action('add_meta_boxes', 'add_hospital_meta_box');
 
-function display_parent_hospital(){
-    
+function display_parent_hospital($post) {
+    $hospitals = get_posts(array(
+        'post_type' => 'hospital',
+        'posts_per_page' => -1,
+    ));
+    $selected_hospital = get_post_meta($post->ID, 'parent_hospital_id', true);
+    ?>
+    <label for="parent_hospital_id"><?php _e('Select Hospital', 'your-text-domain'); ?></label>
+    <select name="parent_hospital_id" id="parent_hospital_id">
+        <?php foreach ($hospitals as $hospital) { ?>
+            <option value="<?php echo $hospital->ID; ?>" <?php selected($selected_hospital, $hospital->ID); ?>><?php echo $hospital->post_title; ?></option>
+        <?php } ?>
+    </select>
+    <?php
 }
+
+function save_hospital_meta_box_data($post_id) {
+    if (array_key_exists('parent_hospital_id', $_POST)) {
+        update_post_meta(
+            $post_id,
+            'parent_hospital_id',
+            $_POST['parent_hospital_id']
+        );
+    }
+}
+add_action('save_post', 'save_hospital_meta_box_data');
+
+
+
+// creating common taxonomy 
+function create_common_taxonomy() {
+    // Labels for the taxonomy
+    $labels = array(
+        'name'              => _x('Hospital Locations', 'hospital location'),
+        'singular_name'     => _x('Hospital Locations', 'taxonomy singular name'),
+        'search_items'      => __('Search Hospital Locations'),
+        'all_items'         => __('All Hospital Locations'),
+        'parent_item'       => __('Parent Hospital Locations'),
+        'parent_item_colon' => __('Parent Hospital Locations:'),
+        'edit_item'         => __('Edit Hospital Locations'),
+        'update_item'       => __('Update Hospital Locations'),
+        'add_new_item'      => __('Add New Hospital Locations'),
+        'new_item_name'     => __('New Hospital Locations Name'),
+        'menu_name'         => __('Hospital Locations'),
+    );
+
+    // Arguments for the taxonomy
+    $args = array(
+        'hierarchical'      => true, // Set to 'false' for non-hierarchical taxonomy like tags
+        'labels'            => $labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array('slug' => 'hospital_location'),
+    );
+
+    // Register the taxonomy and associate it with both custom post types
+    register_taxonomy('custom_taxonomy', array('healthcarepackages', 'hospital'), $args);
+}
+add_action('init', 'create_common_taxonomy');
